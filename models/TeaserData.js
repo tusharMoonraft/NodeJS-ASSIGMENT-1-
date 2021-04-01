@@ -13,6 +13,11 @@ const TeaserScehma=new Schema({
         
     },
 });
+TeaserScehma.virtual('src').get(function(){
+    if(this.img!=null && this.imgType!=null){
+        return `${this.id}`
+    }
+})
 
 module.exports=mongoose.model('TeaserData',TeaserScehma);
 

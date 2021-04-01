@@ -20,6 +20,11 @@ imageSchema.virtual('imgSrc').get(function(){
         return `data:${this.imgType};charset=utf-8;base64,${this.img.toString('base64')}`
     }
 })
+// imageSchema.virtual('src').get(function(){
+//     if(this.img!=null && this.imgType!=null){
+//         return `${this.id}`
+//     }
+// })
 
 
 module.exports=mongoose.model('Image',imageSchema);

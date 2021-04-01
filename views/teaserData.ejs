@@ -56,13 +56,25 @@
         <div class="p">
             
             <% allImages.forEach(function (image) { %>
-                        <div>
+                        <div class="flex">
                             <img src="<%= image.imgSrc%>" alt="">
+                            <a class="delete" data-doc="<%=image._id%>">Delete</a>
 
                         </div>
-
+                        
                 
             <% }) %>  
+
+            
+        </div>
+        <div>
+          
+            <!-- <% allTeaser.forEach(function (teaser) { %>
+                
+                <a class="delete" data-doc="<%= teaser._id %>">Delete</a>
+                
+
+            <% }) %>   -->
         </div>
       
         
@@ -91,6 +103,21 @@
         $("#myButton").click(function(){
             $(".p").toggle();
         });
-    </script>
+
+       const deleteItem= $('.delete');
+       
+    $('.delete').click((e)=>{
+        console.log('going')
+            const endpoint=`/teaseradd/${ deleteItem.attr("data-doc")}`;
+            console.log(endpoint);
+            fetch(endpoint,{
+                method:'DELETE'
+            })
+            .then((response)=>{response.json()})
+            .then((data)=>{window.location.href=data.redirect})
+            .catch((err)=>{console.log(err)})
+       })
+
+        </script>
 </body>
 </html>

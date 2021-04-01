@@ -7,6 +7,7 @@ const TeaserData=require('./models/TeaserData');
 const Images=require('./models/Image');
 
 
+
 const imageMimeType=['image/jpg','image/png','image/jpeg']
 
 
@@ -38,11 +39,16 @@ app.get("/login",(req,res)=>{
     res.render("login");
 })
 
-app.get("/teaserData",async (req,res)=>{
+app.get("/teaseradd",async (req,res)=>{
     try{
+        const allTeaser=await TeaserData.find();
         const allImages= await Images.find();
         res.render("teaserData",{
-            allImages
+            allImages,
+            allTeaser
+
+            
+
        
       
         });
@@ -122,7 +128,7 @@ app.post('/teaseradd', async (req,res,next)=>{
     try{
         const newTeaser=await teaser.save()
         const newImage=await image.save()
-        res.redirect('/')
+        res.redirect('/teaseradd')
     }
     catch(err){
         console.log(err)
@@ -150,6 +156,23 @@ const  saveImage= async (image,imgEncoded)=>{
         
         
     }
-}
+};
+
+
+//delete item
+app.delete('/teaseradd/:_id', async (req,res)=>{
+    const id=req.params._id;
+    
+
+    const findImage=await Images.findByIdAndDelete(id)
+
+        
+    .then(result=>{
+        
+        res.json({redirect:'/teaseradd'})
+    })
+    .catch(err=>{console.log(err)})
+    
+})
 
 app.listen(3000,()=>console.log('Server is working on port 3000'))
